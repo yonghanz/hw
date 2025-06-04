@@ -122,6 +122,24 @@ for i in range(3):
 # 合成物理位移 u_no_tmd = Φ · q_modal
 u_no_tmd = Phi.dot(U_modal)  # shape = (3, n_steps)
 
+# 將 u_no_tmd 的每一行分別對應到 u1, u2, u3
+u1, u2, u3 = u_no_tmd[0, :], u_no_tmd[1, :], u_no_tmd[2, :]
+
+# 計算統計值
+def compute_stats(u, label):
+    return {
+        'label': label,
+        'mean': np.mean(u),
+        'rms': np.sqrt(np.mean(u**2)),
+        'peak': np.max(np.abs(u))
+    }
+
+stats = [
+    compute_stats(u1, '1F'),
+    compute_stats(u2, '2F'),
+    compute_stats(u3, '3F')
+]
+
 # (c) 繪製未裝設 TMD 時各樓層位移時程，並儲存圖片
 plt.figure(figsize=(10, 5))
 colors = ['#E69F00', '#D55E00', '#CC79A7']
@@ -134,3 +152,14 @@ plt.legend(loc='upper right')
 plt.grid(which='both', linestyle='--', alpha=0.5)
 plt.tight_layout()
 plt.savefig("Floor_Displacements_Without_TMD.png")  # 儲存圖片
+
+# 儲存每層樓的位移數據
+np.save('/Users/mac/Desktop/hw213/0602/u1_hw4.npy', u1)
+np.save('/Users/mac/Desktop/hw213/0602/u2_hw4.npy', u2)
+np.save('/Users/mac/Desktop/hw213/0602/u3_hw4.npy', u3)
+
+# 儲存統計數據為 CSV
+import pandas as pd
+df_stats = pd.DataFrame(stats)
+df_stats.to_csv("/Users/mac/Desktop/hw213/0602/noTMD_stats.csv", index=False)
+print(df_stats)

@@ -52,9 +52,9 @@ for i in range(3):
 C = M @ Phi @ np.diag(2 * zeta * omega) @ (Phi.T @ M)
 
 # === TMD 參數 ===
-mu = 0.03
-beta = 0.9592
-zeta_d = 0.0857
+mu = 0.2
+beta = 0.7815
+zeta_d = 0.2098
 omega_3 = omega[2]
 m_d = mu * m
 w_d = beta * omega_3
@@ -109,13 +109,13 @@ plt.plot(time, u3, label="3F", color=colors[2])
 plt.plot(time, uTMD, label="TMD", linestyle='--', color='gray')
 plt.xlabel("Time (s)")
 plt.ylabel("Displacement (m)")
-plt.title("TMD 1")
+plt.title("TMD 3")
 plt.grid(True)
 plt.legend()
 plt.tight_layout()
 
 # 儲存圖檔
-plt.savefig("/Users/mac/Desktop/hw213/0602/TMD1_Displacement.png", dpi=300)
+plt.savefig("/Users/mac/Desktop/hw213/0602/TMD3_Displacement.png", dpi=300)
 
 # 顯示圖檔
 plt.show()
@@ -134,13 +134,12 @@ stats = [compute_stats(u1, '1F'),
          compute_stats(u3, '3F'),
          compute_stats(uTMD, 'TMD')]
 stats
-np.save('/Users/mac/Desktop/hw213/0602/time.npy', time)
-np.save('/Users/mac/Desktop/hw213/0602/u1_hw5.npy', u1)
-np.save('/Users/mac/Desktop/hw213/0602/u2_hw5.npy', u2)
-np.save('/Users/mac/Desktop/hw213/0602/u3_hw5.npy', u3)
+np.save('/Users/mac/Desktop/hw213/0602/u1_hw7.npy', u1)
+np.save('/Users/mac/Desktop/hw213/0602/u2_hw7.npy', u2)
+np.save('/Users/mac/Desktop/hw213/0602/u3_hw7.npy', u3)
 
 import pandas as pd
 
 df_stats = pd.DataFrame(stats)
-df_stats.to_csv("/Users/mac/Desktop/hw213/0602/TMD1_stats.csv", index=False)
+df_stats.to_csv("/Users/mac/Desktop/hw213/0602/TMD3_stats.csv", index=False)
 print(df_stats)
