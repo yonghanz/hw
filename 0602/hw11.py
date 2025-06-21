@@ -25,7 +25,7 @@ u2_hw7 = np.load('/Users/mac/Desktop/hw213/0602/u2_hw7.npy')
 u3_hw7 = np.load('/Users/mac/Desktop/hw213/0602/u3_hw7.npy')
 
 # === 繪製並儲存 1F 比較圖 ===
-plt.figure(figsize=(10, 5))
+plt.figure(figsize=(15, 6))
 plt.plot(time, u1_hw4, label='No TMD - 1F', color='red')
 plt.plot(time, u1_hw5, label='TMD1 - 1F', color='blue')
 plt.plot(time, u1_hw6, label='TMD2 - 1F', color='orange')
@@ -40,7 +40,7 @@ plt.savefig('/Users/mac/Desktop/hw213/0602/1F_Displacement_Comparison.png', dpi=
 plt.close()
 
 # === 繪製並儲存 2F 比較圖 ===
-plt.figure(figsize=(10, 5))
+plt.figure(figsize=(15, 6))
 plt.plot(time, u2_hw4, label='No TMD - 2F', color='red')
 plt.plot(time, u2_hw5, label='TMD1 - 2F', color='blue')
 plt.plot(time, u2_hw6, label='TMD2 - 2F', color='orange')
@@ -55,7 +55,7 @@ plt.savefig('/Users/mac/Desktop/hw213/0602/2F_Displacement_Comparison.png', dpi=
 plt.close()
 
 # === 繪製並儲存 3F 比較圖 ===
-plt.figure(figsize=(10, 5))
+plt.figure(figsize=(15, 6))
 plt.plot(time, u3_hw4, label='No TMD - 3F', color='red')
 plt.plot(time, u3_hw5, label='TMD1 - 3F', color='blue')
 plt.plot(time, u3_hw6, label='TMD2 - 3F', color='orange')

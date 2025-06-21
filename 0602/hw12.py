@@ -10,20 +10,41 @@ acc_g = data[:, 1]  # 單位為 g
 acc_mps2 = acc_g * 9.81  # 換算為 m/s²
 
 # === (a) 繪製地震地表加速度歷時圖 ===
-plt.figure(figsize=(12, 5))
+plt.figure(figsize=(17, 5))
 plt.plot(time, acc_mps2, label="Ground Acceleration", color="steelblue")
+
+# 找到最大值的位置
+peak_acc = np.max(np.abs(acc_mps2))
+peak_time = time[np.argmax(np.abs(acc_mps2))]
+actual_peak_acc = acc_mps2[np.argmax(np.abs(acc_mps2))]  # 實際的尖峰值（可能為負）
+
+# 判斷最大值的正負，調整標記位置
+if actual_peak_acc < 0:
+    annotate_y = actual_peak_acc - 1  # 如果是負值，標記在負值的上方
+else:
+    annotate_y = actual_peak_acc + 1  # 如果是正值，標記在正值的上方
+
+# 標記最大值並圈起來
+plt.scatter(peak_time, actual_peak_acc, color="red", label="Peak Value", zorder=5)
+plt.annotate(f"Peak: {actual_peak_acc:.2f} m/s²",
+             xy=(peak_time, actual_peak_acc),
+             xytext=(peak_time + 1, annotate_y),
+             arrowprops=dict(facecolor='red', arrowstyle="->"),
+             fontsize=10,
+             color="red")
+
 plt.xlabel("Time (s)")
 plt.ylabel("Acceleration (m/s²)")
 plt.title("Northridge")
 plt.grid(True)
+plt.legend()
 plt.tight_layout()
-plt.savefig("/Users/mac/Desktop/hw213/0602/Ground_Acceleration.png", dpi=300)
+plt.savefig("/Users/mac/Desktop/hw213/0602/Ground_Acceleration_with_Peak.png", dpi=300)
 plt.show()
 
 # === (b) 計算統計量（平均值、RMS、尖峰值）===
 mean_acc = np.mean(acc_mps2)
 rms_acc = np.sqrt(np.mean(acc_mps2**2))
-peak_acc = np.max(np.abs(acc_mps2))
 
 # 定義 stats 並存入統計數據
 stats = [

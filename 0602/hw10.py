@@ -25,7 +25,7 @@ u2_hw7 = np.load('/Users/mac/Desktop/hw213/0602/u2_hw7.npy')
 u3_hw7 = np.load('/Users/mac/Desktop/hw213/0602/u3_hw7.npy')
 
 # 繪製比較圖表
-plt.figure(figsize=(12, 9))
+plt.figure(figsize=(16, 9))
 
 # 比較 1F
 plt.subplot(3, 1, 1)

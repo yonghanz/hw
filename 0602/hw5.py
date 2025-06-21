@@ -100,22 +100,35 @@ sol = odeint(system_eq, initial_conditions, time, args=(M4, C4, K4, acc_func))
 # === 分離位移 ===
 u1, u2, u3, uTMD = sol[:, 0], sol[:, 1], sol[:, 2], sol[:, 3]
 
-# === 繪圖並儲存圖檔 ===
-colors = ['#E69F00', '#D55E00', '#CC79A7']
-plt.figure(figsize=(12, 6))
-plt.plot(time, u1, label="1F", color=colors[0])
-plt.plot(time, u2, label="2F", color=colors[1])
-plt.plot(time, u3, label="3F", color=colors[2])
-plt.plot(time, uTMD, label="TMD", linestyle='--', color='gray')
+# === 繪圖並標記最大值 ===
+colors = ['#E69F00', '#D55E00', '#CC79A7', '#0072B2']  # 為 TMD 增加顏色
+labels = ["1F", "2F", "3F", "TMD"]
+displacements = [u1, u2, u3, uTMD]
+
+plt.figure(figsize=(15, 6))
+
+for i, (u, label, color) in enumerate(zip(displacements, labels, colors)):
+    # 繪製位移曲線
+    plt.plot(time, u, label=label, color=color, linestyle='-' if i < 3 else '--')
+    
+    # 找到最大值的位置
+    peak_value = np.max(np.abs(u))
+    peak_time = time[np.argmax(np.abs(u))]
+    actual_peak_value = u[np.argmax(np.abs(u))]  # 實際的尖峰值（可能為負）
+
+    # 標記最大值並圈起來
+    plt.scatter(peak_time, actual_peak_value, color="red", zorder=5)
+
+# 圖表標題與標籤
 plt.xlabel("Time (s)")
 plt.ylabel("Displacement (m)")
-plt.title("TMD 1")
+plt.title("TMD 1 - Displacement with Peak Values")
 plt.grid(True)
 plt.legend()
 plt.tight_layout()
 
 # 儲存圖檔
-plt.savefig("/Users/mac/Desktop/hw213/0602/TMD1_Displacement.png", dpi=300)
+plt.savefig("/Users/mac/Desktop/hw213/0602/TMD1_Displacement_with_Peaks.png", dpi=300)
 
 # 顯示圖檔
 plt.show()

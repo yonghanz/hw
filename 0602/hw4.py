@@ -140,18 +140,36 @@ stats = [
     compute_stats(u3, '3F')
 ]
 
-# (c) 繪製未裝設 TMD 時各樓層位移時程，並儲存圖片
-plt.figure(figsize=(10, 5))
+# (c) 繪製未裝設 TMD 時各樓層位移時程，並標記最大值
+plt.figure(figsize=(15, 6))
 colors = ['#E69F00', '#D55E00', '#CC79A7']
+labels = ['1F', '2F', '3F']
+
 for i in range(3):
-    plt.plot(time, u_no_tmd[i, :], label=f'Floor {i+1}', color=colors[i])
+    # 繪製位移曲線
+    plt.plot(time, u_no_tmd[i, :], label=f'{labels[i]}', color=colors[i])
+    
+    # 找到最大值的位置
+    peak_value = np.max(np.abs(u_no_tmd[i, :]))
+    peak_time = time[np.argmax(np.abs(u_no_tmd[i, :]))]
+    actual_peak_value = u_no_tmd[i, np.argmax(np.abs(u_no_tmd[i, :]))]  # 實際的尖峰值（可能為負）
+
+    # 標記最大值並圈起來
+    plt.scatter(peak_time, actual_peak_value, color="red", zorder=5)
+
+# 圖表標題與標籤
 plt.xlabel('Time (s)')
 plt.ylabel('Displacement (m)')
 plt.title('(c) Floor Displacements Without TMD')
 plt.legend(loc='upper right')
 plt.grid(which='both', linestyle='--', alpha=0.5)
 plt.tight_layout()
-plt.savefig("Floor_Displacements_Without_TMD.png")  # 儲存圖片
+
+# 儲存圖片
+plt.savefig("Floor_Displacements_Without_TMD_with_Peaks.png", dpi=300)
+
+# 顯示圖表
+plt.show()
 
 # 儲存每層樓的位移數據
 np.save('/Users/mac/Desktop/hw213/0602/u1_hw4.npy', u1)
